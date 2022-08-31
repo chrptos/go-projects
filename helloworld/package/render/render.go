@@ -61,7 +61,7 @@ func createTemplateCache(t string) error {
 		return err
 	}
 
-	// テンプレートキャッシュへ追加
+	// テンプレートキャッシュへ追加する
 	tc[t] = tmpl
 
 	return nil
