@@ -1,11 +1,10 @@
 package render
 
 import (
-	"github.com/chrptos/booking/pkg/config"
-	"github.com/chrptos/booking/pkg/models"
-
 	"bytes"
 	"fmt"
+	"github.com/tsawler/bookings-app/pkg/config"
+	"github.com/tsawler/bookings-app/pkg/models"
 	"html/template"
 	"log"
 	"net/http"
