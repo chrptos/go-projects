@@ -13,10 +13,15 @@ func main() {
 		io.WriteString(w, "Hello, World!!\n")
 	}
 	// 定義したhelloHandlerを使うように登録する
-	http.HandleFunc("/", helloHandler)
+	http.HandleFunc("/hello", helloHandler)
 	log.Println("server start at port 8080")
 
 	// サーバーの起動
 	// プログラムが終了するような重大なエラーが返ってきた場合に（ListenAndServeの返り値がエラー）、該当エラーを出力し処理を終了する（log.Fatal）
 	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	// 1. ハンドラを作成する
+	// 2. ハンドラとパスを結びつける
+	// 3. サーバーを起動する
+	// 4. ポート8080
 }
