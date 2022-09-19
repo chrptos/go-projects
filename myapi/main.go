@@ -17,17 +17,18 @@ func main() {
 	// http.HandleFunc("/article/nice", handlers.PostNiceHandler)
 	// http.HandleFunc("/comment", handlers.PostCommentHandler)
 
-	// Httpパッケージのルーターではなく、Gorillaパッケージのルーターを使用する
+	// Httpパッケージのルーターではなく、Gorillaパッケージのルーターを使用する。
+	// 指定されたメソッド以外を受け取った時は、ステータスコード405を返す。
 	r := mux.NewRouter()
-	r.HandleFunc("/hello", handlers.HelloHandler)
-	r.HandleFunc("/article", handlers.PostArticleHandler)
-	r.HandleFunc("/article/list", handlers.ArticleListHandler)
-	r.HandleFunc("/article/1", handlers.ArticleDetailHandler)
-	r.HandleFunc("/article/nice", handlers.PostNiceHandler)
-	r.HandleFunc("/comment", handlers.PostCommentHandler)
+	r.HandleFunc("/hello", handlers.HelloHandler).Methods(http.MethodGet)
+	r.HandleFunc("/article", handlers.PostArticleHandler).Methods(http.MethodPost)
+	r.HandleFunc("/article/list", handlers.ArticleListHandler).Methods(http.MethodGet)
+	r.HandleFunc("/article/1", handlers.ArticleDetailHandler).Methods(http.MethodGet)
+	r.HandleFunc("/article/nice", handlers.PostNiceHandler).Methods(http.MethodPost)
+	r.HandleFunc("/comment", handlers.PostCommentHandler).Methods(http.MethodPost)
 
 	log.Println("server start at port 8080")
 	// ListenAndServeはサーバー内で使用されるルーターを指定する
-	// Httpパッケージから、Gorillaパッケージのルーターに変えたことでnilからrへ変更
+	// Httpパッケージから、Gorillaパッケージのルーターに変えたことでnilからrへ変更する
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
