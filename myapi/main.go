@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+
 	// Go の HTTP サーバーがデフォルトで持っているルータに、ルーティングルールを登録する
 	// http.HandleFunc("/hello", handlers.HelloHandler)
 	// http.HandleFunc("/article", handlers.PostArticleHandler)
