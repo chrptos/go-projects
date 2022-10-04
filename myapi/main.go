@@ -21,7 +21,7 @@ func main() {
 	// Httpパッケージのルーターではなく、Gorillaパッケージのルーターを使用する。
 	// 指定されたメソッド以外を受け取った時は、ステータスコード405を返す。
 	r := mux.NewRouter()
-	r.HandleFunc("/hello", handlers.HelloHandler).Methods(http.MethodGet)
+	// r.HandleFunc("/hello", handlers.HelloHandler).Methods(http.MethodGet)
 	r.HandleFunc("/article", handlers.PostArticleHandler).Methods(http.MethodPost)
 	r.HandleFunc("/article/list", handlers.ArticleListHandler).Methods(http.MethodGet)
 	// r.HandleFunc("/article/1", handlers.ArticleDetailHandler).Methods(http.MethodGet)
