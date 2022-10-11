@@ -13,22 +13,9 @@ import (
 
 // /article のハンドラ
 func PostArticleHandler(w http.ResponseWriter, req *http.Request) {
-	// json→Article構造体へデコード処理
 	var reqArticle models.Article
-
-	if err != json.NewDecoder(req.Body).Decode(&reqArticle); err != nil {
-		http.Error(w, "fail to decode json\n", http.StatusBadRequest)
-	}
-
-	// Article構造体→jsonエンコード処理
-	article := models.Article1
-	jsonData, err := json.Marshal(article)
-	if err != nil {
-		http.Error(w, "fail to encode\n", http.StatusInternalServerError)
-		return
-	}
-
-	w.Write(jsonData)
+	article := reqArticle
+	json.NewEncoder(w).Encode(article)
 }
 
 // /article/list のハンドラ
