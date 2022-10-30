@@ -1,4 +1,4 @@
-module dbsample
+module github.com/chrptos/dbsample
 
 go 1.18
 
