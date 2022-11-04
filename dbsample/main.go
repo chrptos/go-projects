@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/chrptos/dbsample/models"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -20,30 +19,40 @@ func main() {
 	}
 	defer db.Close()
 
-	const sqlStr = `
-		select title, contents, username, nice
-		from articles;
-	`
-
-	rows, err := db.Query(sqlStr)
+	// トランザクション開始
+	tx, err := db.Begin()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	defer rows.Close()
 
-	articleArray := make([]models.Article, 0)
-	for rows.Next() {
-		var article models.Article
-		// 引数に「データ読み出し結果を格納したい変数のポインタ」を指定することで、rowsの中に格納されている取得レコード内容を読み出すことができる。
-		err := rows.Scan(&article.Title, &article.Contents, &article.UserName, &article.NiceNum)
+	article_id := 1
+	const sqlGetNice = `
+		select nice from articles where article_id = ?;
+	`
 
-		if err != nil {
-			fmt.Println(err)
-		} else {
-			articleArray = append(articleArray, article)
-		}
+	row := tx.QueryRow(sqlGetNice, article_id)
+	if err := row.Err(); err != nil {
+		fmt.Println(err)
+		tx.Rollback()
+		return
 	}
 
-	fmt.Printf("%+v\n", articleArray)
+	var nicenum int
+	err = row.Scan(&nicenum)
+	if err != nil {
+		fmt.Println(err)
+		tx.Rollback()
+		return
+	}
+
+	const sqlUpdateNice = `update articles set nice = ? where article_id = ?`
+	_, err = tx.Exec(sqlUpdateNice, nicenum+1, article_id)
+	if err != nil {
+		fmt.Println(err)
+		tx.Rollback()
+		return
+	}
+
+	tx.Commit()
 }
