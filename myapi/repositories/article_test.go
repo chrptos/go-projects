@@ -20,4 +20,3 @@ func TestSelectArticleDetail(t *testing.T) {
 	if got != expected {
 		t.Errorf("get %s but want %s\n", got, expected)
 	}
-}
