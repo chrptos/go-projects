@@ -3,7 +3,7 @@ package repositories
 import (
 	"database/sql"
 
-	"github.com/yourname/reponame/models"
+	"github.com/chrptos/myapi/models"
 )
 
 // 新規投稿をDBにinsertする関数
