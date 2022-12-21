@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -49,7 +50,14 @@ func main() {
 		CommentList: []Comment{comment1, comment2},
 		CreatedAt:   time.Now(),
 	}
-	fmt.Printf("%+v\n", article)
+	// fmt.Printf("%+v\n", article)
+
+	jsonData, err := json.Marshal(article)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("%s\n", jsonData)
 
 	r := mux.NewRouter()
 
